@@ -39,7 +39,25 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
     return selectedAssists.map((element) => element.id).toList();
   }
 
+  bool validateOrder(){
+
+    if(operatorIdController.text.isEmpty){
+      Get.snackbar("Erro", "Campo [Código do prestador] deve ser preenchido");
+      return false;
+    }
+
+    if(selectedAssists.isEmpty){
+      Get.snackbar("Erro", "Deve ser selecionado pelo menos 1 assistência.");
+      return false;
+    }
+
+    return true;
+  }
+
   finishStartOrder() {
+    
+    if(!validateOrder()) return;
+
     switch (screenState.value) {
       case OrderState.creating:
         _geolocationService.getPosition().then((value) {
@@ -74,6 +92,7 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
         Get.snackbar("Sucesso", "Ordem de serviço criada com sucesso");
         clearForm();
       }
+      Get.snackbar("Erro", value.message);
     }).catchError((error) {
       Get.snackbar("Erro", error.toString());
     });

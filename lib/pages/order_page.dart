@@ -36,7 +36,7 @@ class OrderPage extends GetView<OrderController> {
               keyboardType: TextInputType.number,
               decoration:
                   const InputDecoration(labelText: "Código do prestador"),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center
             ),
             Row(children: [
               const Expanded(
@@ -66,7 +66,11 @@ class OrderPage extends GetView<OrderController> {
             Row(children: [
               Expanded(
                   child: ElevatedButton(
-                      onPressed: () => controller.finishStartOrder(),
+                      onPressed: () {
+                      if(controller.formKey.currentState!.validate()){
+                        controller.finishStartOrder();
+                      }}
+                      ,
                       child: Obx(
                         () {
                           if (controller.screenState.value ==
