@@ -14,13 +14,14 @@ class OrderService extends GetxService implements OrderServiceInterface {
 
   @override
   Future<OrderCreated> createOrder(Order order) async {
-        
-    Response response = await _orderProviderInterface.postOrder(order);
-    if (response.hasError) {
-      return Future.error(ErrorDescription("Erro na conexao"));
-    }
 
-    try {
+    try {  
+      Response response = await _orderProviderInterface.postOrder(order);
+      if (response.hasError) {
+        //return Future.error(ErrorDescription("Erro na conexao"));
+        return Future.sync(() => OrderCreated(false, "Erro na conexao"));
+      }
+
       return Future.sync(() => OrderCreated(true, ""));
     } catch (e) {
       e.printError();

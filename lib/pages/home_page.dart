@@ -12,7 +12,8 @@ class HomePage extends GetView<AssistController> {
         itemCount: assist.length,
         itemBuilder: ((context, index) => ListTile(
               title: Text(assist[index].name),
-              selectedColor: Colors.red,
+              selectedColor: Colors.white,
+              selectedTileColor: Colors.green,
               selected: controller.isSelected(index),
               onTap: () => controller.selectAssist(index),
             )));
@@ -23,6 +24,7 @@ class HomePage extends GetView<AssistController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de serviços'),
+        centerTitle: true,
       ),
       body: Container(
           constraints: const BoxConstraints.expand(),

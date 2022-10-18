@@ -93,6 +93,7 @@ class OrderPage extends GetView<OrderController> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Ordem de serviço"),
+          centerTitle: true
         ),
         body: Container(
             constraints: const BoxConstraints.expand(),

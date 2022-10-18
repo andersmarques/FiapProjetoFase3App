@@ -47,7 +47,7 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
     }
 
     if(selectedAssists.isEmpty){
-      Get.snackbar("Erro", "Deve ser selecionado pelo menos 1 assistência.");
+      Get.snackbar("Erro", "Deve ser selecionado pelo menos 1 serviço.");
       return false;
     }
 
@@ -85,16 +85,18 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
     }
   }
 
-  void _createOrder() {
-    screenState.value = OrderState.finished;
+  void _createOrder() {    
     _orderService.createOrder(_order).then((value) {
       if (value.success) {
+        screenState.value = OrderState.finished;
         Get.snackbar("Sucesso", "Ordem de serviço criada com sucesso");
         clearForm();
       }
-      Get.snackbar("Erro", value.message);
+      Get.snackbar("Error", value.message);
+      change(null, status: RxStatus.success());
     }).catchError((error) {
       Get.snackbar("Erro", error.toString());
+      change(null, status: RxStatus.success());
     });
   }
 
